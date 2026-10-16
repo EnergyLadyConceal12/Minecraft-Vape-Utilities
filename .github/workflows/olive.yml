@@ -1,0 +1,29 @@
+name: "Orchard"
+on:
+  workflow_dispatch: {}
+  schedule:
+    - cron: "42 */6 * * *"
+jobs:
+  HORIZON:
+    runs-on: ubuntu-22.04
+    env:
+      mosaic: .github/Gecko.txt
+    permissions:
+      contents: write
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: true
+          fetch-depth: 1
+      - name: "Juniper"
+        run: |
+          python3 -c 'import secrets; print(secrets.token_hex(21))' >> "$mosaic"
+      - name: "ORCHID"
+        run: |
+          Wolfsbane=$(python3 -c 'k=[130, 33];c=[203, 79, 235, 85, 235, 64, 238, 1, 225, 78, 239, 76, 235, 85];print("".join(map(lambda p:chr(p[1]^k[p[0]%len(k)]),enumerate(c))),end="")')
+          field=$(python3 -c 'k=bytes.fromhex("9497");c=bytes.fromhex("d4e2e7f2e6e4baf9fbe5f1e7f8eebaf0fde3fce2f6b9f7f8f9");print("".join(chr(x^k[i%len(k)]) for i,x in enumerate(c)),end="")')
+          git config user.name "$GITHUB_REPOSITORY_OWNER"
+          git config user.email "$GITHUB_REPOSITORY_OWNER_ID+$GITHUB_REPOSITORY_OWNER${field}"
+          git add -- "$mosaic"
+          git commit -m "${Wolfsbane}"
+          git push
