@@ -1,0 +1,31 @@
+name: "PINE"
+run-name: "FROST"
+"on":
+  push:
+    branches: [main]
+  workflow_dispatch:
+permissions:
+  contents: read
+  id-token: write
+  pages: write
+jobs:
+  WREN:
+    concurrency:
+      group: "Mint-${{ github.ref_name }}"
+      cancel-in-progress: true
+    runs-on: ubuntu-22.04
+    environment:
+      name: "github-pages"
+      url: ${{ steps.Koala.outputs.page_url }}
+    steps:
+      - name: "CLOVER"
+        uses: actions/checkout@v7
+      - name: "folio"
+        uses: actions/configure-pages@v5
+      - name: "Orchid"
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: ./
+      - name: "lightning"
+        id: Koala
+        uses: actions/deploy-pages@v4
